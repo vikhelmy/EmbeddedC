@@ -1,0 +1,4 @@
+In here we demonstrate one file that does 3 different functions.
+  a) Counting up LED
+  b) Couting down LED
+  c) A button to Choose between counting up or counting down depending if the button is pushed or not
