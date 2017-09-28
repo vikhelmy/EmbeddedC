@@ -1,29 +1,16 @@
-/*******************************************
-Project 		Skeleton code to be used as starting point for applications
-Target 			ATmega1281 on STK300
-Program			Skeleton_1281_C.c
-Author			Richard Anthony
-Date			14th September 2013
-
-Fuse settings	System clock: Use the internal RC oscillator at 8.0MHz and CKDIV8 fuse programmed, resulting in 1.0MHz system clock.
-				Fuse settings should be: CKSEL = "0010", SUT = "10", CKDIV8 = "0"
-
-Function		Performs basic setup - no application logic included
-*******************************************/
 #include <avr/io.h>
+#include <util/delay.h>
 
 void InitialiseGeneral();
-
+unsigned char uCountvalue;	// Create the variable that will hold the count value
 
 void InitialiseGeneral()
 {
-	// Ports are configured by default to Port B output and Port D input - change as necessary
-	DDRB = 0xFF;	// Set port B direction OUTPUT (connected to the on-board LEDs)
-	PORTB = 0xFF;	// Set all LEDs initially off (inverted on the board, so '1' = off)
+	// Configure Ports
+	DDRB = 0xFF;		// Set port B direction OUTPUT (connected to the on-board LEDs)
+	PORTB = 0xFF;		// Set all LEDs initially off (inverted on the board, so '1' = off)
 
-	DDRD = 0x00;	// Set port D direction INPUT (connected to the on-board SWITCHs)
-
-	// Place additional one-off initialisation code here
+	uCountvalue  = 0;	// Initialize the count value to 0
 }
 
 int main( void )
@@ -32,8 +19,17 @@ int main( void )
 
 	while(1)
 	{
-		// Place your main-loop code here
+		// Use F9 to place a breakpoint on the line below
+		PORTB = ~uCountvalue;	// Write the data value to Port B (the ~ performs 1s compliment
+		// because the switch values are inverted in the STK300 board hardware)
 		
-		// This loop will repeat continuously
+		uCountvalue++;			// Increment the count value
+
+		// The delay statement below has been commented out because it complicates the debugging process –
+		// especially for beginners
+		// Note that if running the code without debug mode you should un-comment the statement otherwise
+		// the display changes too quickly to see what is happening
+
+		//_delay_ms(500);			// Add a delay so we can see the pattern change
 	}
 }
